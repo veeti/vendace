@@ -3,8 +3,6 @@
 #include <QRect>
 #include <QSize>
 
-#include <iostream>
-
 #include "ScreenshotWindow.hpp"
 #include "ResultWindow.hpp"
 
