@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include <QTemporaryFile>
+#include <QProcess>
 
 #include "ui_preview.h"
 
@@ -14,12 +16,17 @@ class ResultWindow : public QMainWindow {
         explicit ResultWindow(QPixmap screenshot);
 
     protected slots:
+        void editPressed();
+        void editFinished();
         void savePressed();
 
     private:
         QPixmap mScreenshot;
         QGraphicsScene mScene;
         Ui::PreviewWindow mUi;
+
+        QTemporaryFile *mEditFile;
+        QProcess *mEditProcess;
 
 };
 

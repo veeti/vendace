@@ -32,7 +32,7 @@
    <string>Captured screenshot</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,0,0">
     <property name="spacing">
      <number>16</number>
     </property>
@@ -73,6 +73,13 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="editButton">
+      <property name="text">
+       <string>Edit</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="saveButton">
