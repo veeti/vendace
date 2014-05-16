@@ -1,5 +1,6 @@
 #include <QDateTime>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "ResultWindow.hpp"
 
@@ -15,7 +16,10 @@ void ResultWindow::savePressed() {
     QString filename = QDateTime::currentDateTime().toString() + ".png";
     QString path = QFileDialog::getSaveFileName(this, tr("Save screenshot"), filename, "PNG image (*.png)");
     if (!path.isEmpty()) {
-        mScreenshot.save(path);
-        close();
+        if (mScreenshot.save(path)) {
+            close();
+        } else {
+            QMessageBox::critical(this, tr("Error"), tr("Failed to save screenshot."));
+        }
     }
 }
