@@ -14,6 +14,8 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
 void ResultWindow::savePressed() {
     QString filename = QDateTime::currentDateTime().toString() + ".png";
     QString path = QFileDialog::getSaveFileName(this, tr("Save screenshot"), filename, "PNG image (*.png)");
-    mScreenshot.save(path);
-    close();
+    if (!path.isEmpty()) {
+        mScreenshot.save(path);
+        close();
+    }
 }
