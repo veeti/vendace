@@ -36,6 +36,8 @@ void ResultWindow::openEditor() {
         QStringList args;
         args << mEditFile->fileName();
         mEditProcess->start(mSettings.editorPath(), args);
+
+        mUi.editButton->setEnabled(false);
     }
 }
 
@@ -51,6 +53,8 @@ void ResultWindow::editFinished() {
 }
 
 void ResultWindow::cleanupEdit() {
+    mUi.editButton->setEnabled(true);
+
     if (mEditFile != NULL) {
         mEditFile->deleteLater();
         mEditFile = NULL;
