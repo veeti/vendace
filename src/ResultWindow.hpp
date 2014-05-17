@@ -6,6 +6,7 @@
 #include <QTemporaryFile>
 #include <QProcess>
 
+#include "Settings.hpp"
 #include "ui_preview.h"
 
 class ResultWindow : public QMainWindow {
@@ -15,10 +16,16 @@ class ResultWindow : public QMainWindow {
     public:
         explicit ResultWindow(QPixmap screenshot);
 
+    protected:
+        void openEditor();
+        void cleanupEdit();
+
     protected slots:
         void editPressed();
+        void editProcessError(QProcess::ProcessError);
         void editFinished();
         void savePressed();
+        void openSettings();
 
     private:
         QPixmap mScreenshot;
@@ -27,6 +34,7 @@ class ResultWindow : public QMainWindow {
 
         QTemporaryFile *mEditFile;
         QProcess *mEditProcess;
+        Settings mSettings;
 
 };
 
