@@ -5,8 +5,11 @@
 #include <QPixmap>
 #include <QTemporaryFile>
 #include <QProcess>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 
 #include "Settings.hpp"
+#include "Uploader.hpp"
 #include "ui_preview.h"
 
 class ResultWindow : public QMainWindow {
@@ -19,12 +22,16 @@ class ResultWindow : public QMainWindow {
     protected:
         void openEditor();
         void cleanupEdit();
+        QTemporaryFile *saveToTemp();
+        void showTempFileError();
 
     protected slots:
         void editPressed();
         void editProcessError(QProcess::ProcessError);
         void editFinished();
         void savePressed();
+        void uploadPressed();
+        void uploadFinished(QNetworkReply*);
         void openSettings();
 
     private:
@@ -34,6 +41,8 @@ class ResultWindow : public QMainWindow {
 
         QTemporaryFile *mEditFile;
         QProcess *mEditProcess;
+        QNetworkAccessManager mNetworkManager;
+        Uploader mUploader;
         Settings mSettings;
 
 };

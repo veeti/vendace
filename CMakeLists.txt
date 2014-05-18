@@ -18,4 +18,4 @@ include_directories(${CMAKE_CURRENT_SOURCEDIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 # Add executable
 add_executable(vendace ${VENDACE_SOURCES} ${VENDACE_HEADERS} ${VENDACE_HEADERS_MOC} ${VENDACE_FORMS_HEADERS})
-qt5_use_modules(vendace Widgets)
+qt5_use_modules(vendace Widgets Network)
