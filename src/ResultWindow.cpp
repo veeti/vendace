@@ -106,10 +106,6 @@ void ResultWindow::uploadPressed() {
 }
 
 void ResultWindow::uploadFinished(QNetworkReply *reply) {
-    // Hide progress
-    mUi.uploadProgress->setVisible(false);
-    mUi.uploadButton->setEnabled(true);
-
     if (reply->error() == QNetworkReply::NoError) {
         // Copy URL
         QClipboard* clipboard = QApplication::clipboard();
@@ -118,6 +114,8 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
         close();
     } else {
         QMessageBox::critical(this, tr("Upload error"), tr("The upload failed. Try again later."));
+        mUi.uploadProgress->setVisible(false);
+        mUi.uploadButton->setEnabled(true);
     }
 
     reply->deleteLater();
