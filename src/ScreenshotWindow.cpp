@@ -8,22 +8,21 @@
 
 ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
     // Get the entire screen size
-    int w = 0, h = 0;
-    for (int i = 0; i < QGuiApplication::screens().size(); i++) {
-        QScreen *screen = QGuiApplication::screens().at(i);
-        w += screen->geometry().width();
-        h = std::max(h, screen->geometry().height());
-    }
+    QSize screen = QApplication::desktop()->size();
+    int w = screen.width();
+    int h = screen.height();
 
     // Snap
     // FIXME: Is this safe with multiple monitors?
     mScreenshot = QGuiApplication::primaryScreen()->grabWindow(0, 0, 0, w, h);
 
     // Full screen and no title bar
-    setWindowFlags(Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+    setWindowState(Qt::WindowFullScreen);
 
     createUi();
-    move(-99999999, -99999999); // FIXME hack
+    resize(screen);
+    move(0, 0);
 }
 
 void ScreenshotWindow::createUi() {
