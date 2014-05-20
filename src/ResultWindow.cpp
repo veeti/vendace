@@ -139,3 +139,7 @@ void ResultWindow::openSettings() {
 void ResultWindow::showTempFileError() {
     QMessageBox::critical(this, tr("Failed to save"), tr("Couldn't save the screenshot to a temporary file."));
 }
+
+void ResultWindow::resizeEvent(QResizeEvent *event) {
+    mUi.graphicsView->fitInView(mScene.sceneRect(), Qt::KeepAspectRatio);
+}

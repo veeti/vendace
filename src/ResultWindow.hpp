@@ -33,6 +33,7 @@ class ResultWindow : public QMainWindow {
         void uploadPressed();
         void uploadFinished(QNetworkReply*);
         void openSettings();
+        void resizeEvent(QResizeEvent*);
 
     private:
         QPixmap mScreenshot;

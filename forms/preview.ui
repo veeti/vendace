@@ -22,12 +22,6 @@
     <height>500</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>380</width>
-    <height>500</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Captured screenshot</string>
   </property>
@@ -126,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>380</width>
-     <height>24</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
