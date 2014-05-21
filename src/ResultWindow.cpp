@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QNetworkReply>
 #include <QDir>
+#include <QTimer>
 
 #include "Uploader.hpp"
 #include "ResultWindow.hpp"
@@ -111,7 +112,12 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
         QClipboard* clipboard = QApplication::clipboard();
         clipboard->setText(mUploader.getUrlFromReply(reply));
         QMessageBox::information(this, tr("Upload complete"), tr("The image link has been copied to your clipboard."));
-        close();
+
+        // Stick around for a minute to keep the clipboard
+        hide();
+        QTimer *timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(close()));
+        timer->start(60000);
     } else {
         QMessageBox::critical(this, tr("Upload error"), tr("The upload failed. Try again later."));
         mUi.uploadProgress->setVisible(false);
