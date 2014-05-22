@@ -147,5 +147,10 @@ void ResultWindow::showTempFileError() {
 }
 
 void ResultWindow::resizeEvent(QResizeEvent *event) {
-    mUi.graphicsView->fitInView(mScene.sceneRect(), Qt::KeepAspectRatio);
+    QRect view = mUi.graphicsView->rect();
+    if (mScreenshot.width() >= view.width() || mScreenshot.height() >= view.height()) {
+        mUi.graphicsView->fitInView(mScreenshot.rect(), Qt::KeepAspectRatio);
+    } else {
+        mUi.graphicsView->fitInView(view);
+    }
 }
