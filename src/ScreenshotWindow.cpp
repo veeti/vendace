@@ -18,6 +18,7 @@ ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
     // Full screen and no title bar
     setWindowFlags(Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
     setWindowState(Qt::WindowFullScreen);
+    setMouseTracking(true);
 
     createUi();
     resize(screen);
@@ -27,6 +28,11 @@ ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
 void ScreenshotWindow::createUi() {
     mScreenshotLabel = new QLabel;
     mScreenshotLabel->setPixmap(mScreenshot);
+
+    // Track mouse and pass to main window
+    mScreenshotLabel->setMouseTracking(true);
+    mScreenshotLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     setCentralWidget(mScreenshotLabel);
 
     mHelpLabel = new QLabel(mScreenshotLabel);
@@ -68,5 +74,11 @@ void ScreenshotWindow::mousePressEvent(QMouseEvent *event) {
 }
 
 void ScreenshotWindow::mouseMoveEvent(QMouseEvent *event) {
-    mCropper->setGeometry(QRect(mCropOrigin, event->pos()).normalized());
+    // Resize cropper if dragging
+    if (mCropper != NULL && event->buttons() & Qt::LeftButton == 1) {
+        mCropper->setGeometry(QRect(mCropOrigin, event->pos()).normalized());
+    }
+
+    // Keep the help label out of the way
+    mHelpLabel->setVisible(!mHelpLabel->geometry().contains(event->pos()));
 }
