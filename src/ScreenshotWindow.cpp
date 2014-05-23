@@ -13,7 +13,6 @@ ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
     int h = screen.height();
 
     // Snap
-    // FIXME: Is this safe with multiple monitors?
     mScreenshot = QGuiApplication::primaryScreen()->grabWindow(0, 0, 0, w, h);
 
     // Full screen and no title bar
