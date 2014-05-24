@@ -19,3 +19,15 @@ include_directories(${CMAKE_CURRENT_SOURCEDIR} ${CMAKE_CURRENT_BINARY_DIR})
 # Add executable
 add_executable(vendace ${VENDACE_SOURCES} ${VENDACE_HEADERS} ${VENDACE_HEADERS_MOC} ${VENDACE_FORMS_HEADERS})
 qt5_use_modules(vendace Widgets Network)
+
+# Generate desktop file
+configure_file(share/vendace.desktop "${CMAKE_CURRENT_BINARY_DIR}/vendace.desktop")
+
+# Installation
+install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/vendace" DESTINATION bin/)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/vendace.desktop" DESTINATION share/applications/)
+install(FILES share/icons/vendace.svg DESTINATION share/icons/hicolor/scalable/apps/)
+install(FILES share/icons/vendace-64.png DESTINATION share/icons/hicolor/64x64/apps/ RENAME vendace.png)
+install(FILES share/icons/vendace-128.png DESTINATION share/icons/hicolor/128x128/apps/ RENAME vendace.png)
+install(FILES share/icons/vendace-256.png DESTINATION share/icons/hicolor/256x256/apps/ RENAME vendace.png)
+install(FILES share/icons/vendace-512.png DESTINATION share/icons/hicolor/512x512/apps/ RENAME vendace.png)
