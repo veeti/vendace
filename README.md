@@ -1,6 +1,6 @@
-# Vendace
+![Vendace](share/icons/vendace-128.png)
 
-A simple screenshot capture, crop and upload tool built with Qt 5.
+**Vendace** is a simple screenshot capture, crop and upload tool built with Qt 5.
 
 ## Features
 
