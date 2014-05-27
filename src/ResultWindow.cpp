@@ -46,7 +46,8 @@ void ResultWindow::cleanupEdit() {
 }
 
 /**
- * Called on window resize.
+ * Called on window resize. Scales the screenshot to either fit in the preview widget or to its
+ * maximum size.
  */
 void ResultWindow::resizeEvent(QResizeEvent *event) {
     QRect view = mUi.graphicsView->rect();
@@ -111,7 +112,7 @@ void ResultWindow::editProcessError(QProcess::ProcessError error) {
 }
 
 /**
- * Handles the end of the edit process.
+ * Handles the end of the edit process and loads the edited image.
  */
 void ResultWindow::editFinished() {
     mScreenshot.load(mEditFile->fileName(), "PNG");
@@ -139,7 +140,8 @@ void ResultWindow::uploadPressed() {
 }
 
 /**
- * Called when the upload is finished.
+ * Called when the upload is finished. Copies the resulting URL to the clipboard or shows an
+ * error.
  */
 void ResultWindow::uploadFinished(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
