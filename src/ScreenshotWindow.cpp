@@ -98,5 +98,7 @@ void ScreenshotWindow::mouseMoveEvent(QMouseEvent *event) {
     }
 
     // Keep the help label out of the way
-    mHelpLabel->setVisible(!mHelpLabel->geometry().contains(event->pos()));
+    bool mouseInHelp = mHelpLabel->geometry().contains(event->pos());
+    bool cropperInHelp = (mCropper != NULL && mHelpLabel->geometry().intersects(mCropper->geometry()));
+    mHelpLabel->setVisible(!(mouseInHelp || cropperInHelp));
 }
