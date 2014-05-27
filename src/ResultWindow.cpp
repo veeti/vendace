@@ -26,42 +26,11 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     connect(&mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(uploadFinished(QNetworkReply*)));
 }
 
-void ResultWindow::editPressed() {
-    if (mSettings.editorPath().isEmpty()) {
-        QMessageBox::information(this, tr("Editor not set"), tr("You haven't selected the editor to use yet. You can set an editor from File -> Settings."));
-    } else {
-        openEditor();
-    }
-}
+// Methods
 
-void ResultWindow::openEditor() {
-    mEditFile = saveToTemp();
-    if (mEditFile == NULL) {
-        showTempFileError();
-    } else {
-        mEditProcess = new QProcess(this);
-        connect(mEditProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(editProcessError(QProcess::ProcessError)));
-        connect(mEditProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(editFinished()));
-
-        QStringList args;
-        args << mEditFile->fileName();
-        mEditProcess->start(mSettings.editorPath(), args);
-
-        mUi.editButton->setEnabled(false);
-    }
-}
-
-void ResultWindow::editProcessError(QProcess::ProcessError error) {
-    QMessageBox::critical(this, tr("Error"), tr("The editor could not be started."));
-    cleanupEdit();
-}
-
-void ResultWindow::editFinished() {
-    mScreenshot.load(mEditFile->fileName(), "PNG");
-    mScene.addPixmap(mScreenshot);
-    cleanupEdit();
-}
-
+/**
+ * Cleans up after the edit process.
+ */
 void ResultWindow::cleanupEdit() {
     mUi.editButton->setEnabled(true);
 
@@ -76,18 +45,71 @@ void ResultWindow::cleanupEdit() {
     }
 }
 
-void ResultWindow::savePressed() {
-    QString filename = QDateTime::currentDateTime().toString() + ".png";
-    QString path = QFileDialog::getSaveFileName(this, tr("Save screenshot"), filename, "PNG image (*.png)");
-    if (!path.isEmpty()) {
-        if (mScreenshot.save(path)) {
-            close();
-        } else {
-            QMessageBox::critical(this, tr("Error"), tr("Failed to save screenshot."));
-        }
+/**
+ * Saves the current screenshot into a temporary file. May return null on failure.
+ */
+QTemporaryFile* ResultWindow::saveToTemp() {
+    QTemporaryFile *file = new QTemporaryFile(QDir::tempPath() + "/vendace-XXXXXXX.png", this);
+    if (file->open() && mScreenshot.save(file->fileName(), "PNG")) {
+        return file;
+    } else {
+        QMessageBox::critical(this, tr("Failed to save"), tr("Couldn't save the screenshot to a temporary file."));
+        file->deleteLater();
+        return NULL;
     }
 }
 
+// Slots
+
+/*
+ * Called when the editor button is pressed.
+ */
+void ResultWindow::editPressed() {
+    if (mSettings.editorPath().isEmpty()) {
+        QMessageBox::information(this, tr("Editor not set"), tr("You haven't selected the editor to use yet. You can set an editor from File -> Settings."));
+    } else {
+        openEditor();
+    }
+}
+
+/**
+ * Opens the editor.
+ */
+void ResultWindow::openEditor() {
+    mEditFile = saveToTemp();
+    if (mEditFile != NULL) {
+        mEditProcess = new QProcess(this);
+        connect(mEditProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(editProcessError(QProcess::ProcessError)));
+        connect(mEditProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(editFinished()));
+
+        QStringList args;
+        args << mEditFile->fileName();
+        mEditProcess->start(mSettings.editorPath(), args);
+
+        mUi.editButton->setEnabled(false);
+    }
+}
+
+/**
+ * Handles editor process errors.
+ */
+void ResultWindow::editProcessError(QProcess::ProcessError error) {
+    QMessageBox::critical(this, tr("Error"), tr("The editor could not be started."));
+    cleanupEdit();
+}
+
+/**
+ * Handles the end of the edit process.
+ */
+void ResultWindow::editFinished() {
+    mScreenshot.load(mEditFile->fileName(), "PNG");
+    mScene.addPixmap(mScreenshot);
+    cleanupEdit();
+}
+
+/**
+ * Called when the upload button is pressed.
+ */
 void ResultWindow::uploadPressed() {
     // Show progress
     mUi.uploadProgress->setVisible(true);
@@ -95,9 +117,7 @@ void ResultWindow::uploadPressed() {
 
     // Save image to temporary file
     QTemporaryFile *temp = saveToTemp();
-    if (temp == NULL) {
-        showTempFileError();
-    } else {
+    if (temp != NULL) {
         // Send request
         QNetworkRequest req = mUploader.makeRequest();
         QHttpMultiPart *params = mUploader.makeMultiPart(temp);
@@ -106,6 +126,9 @@ void ResultWindow::uploadPressed() {
     }
 }
 
+/**
+ * Called when the upload is finished.
+ */
 void ResultWindow::uploadFinished(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
         // Copy URL
@@ -127,25 +150,32 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
     reply->deleteLater();
 }
 
-QTemporaryFile* ResultWindow::saveToTemp() {
-    QTemporaryFile *file = new QTemporaryFile(QDir::tempPath() + "/vendace-XXXXXXX.png", this);
-    if (file->open() && mScreenshot.save(file->fileName(), "PNG")) {
-        return file;
-    } else {
-        file->deleteLater();
-        return NULL;
+/**
+ * Called when the save button is pressed.
+ */
+void ResultWindow::savePressed() {
+    QString filename = QDateTime::currentDateTime().toString() + ".png";
+    QString path = QFileDialog::getSaveFileName(this, tr("Save screenshot"), filename, "PNG image (*.png)");
+    if (!path.isEmpty()) {
+        if (mScreenshot.save(path)) {
+            close();
+        } else {
+            QMessageBox::critical(this, tr("Error"), tr("Failed to save screenshot."));
+        }
     }
 }
 
+/**
+ * Opens a settings dialog.
+ */
 void ResultWindow::openSettings() {
     SettingsDialog settings(this);
     settings.exec();
 }
 
-void ResultWindow::showTempFileError() {
-    QMessageBox::critical(this, tr("Failed to save"), tr("Couldn't save the screenshot to a temporary file."));
-}
-
+/**
+ * Called on window resize.
+ */
 void ResultWindow::resizeEvent(QResizeEvent *event) {
     QRect view = mUi.graphicsView->rect();
     if (mScreenshot.width() >= view.width() || mScreenshot.height() >= view.height()) {

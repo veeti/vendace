@@ -6,6 +6,10 @@
 #include <QRubberBand>
 #include <QPoint>
 
+/**
+ * A window that captures the current screen and displays an interface for cropping the resulting
+ * screenshot.
+ */
 class ScreenshotWindow : public QMainWindow {
 
     Q_OBJECT

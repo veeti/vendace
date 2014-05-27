@@ -25,7 +25,11 @@ ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
     move(0, 0);
 }
 
+/**
+ * Creates the central widget for the window.
+ */
 void ScreenshotWindow::createUi() {
+    // Show the screenshot
     mScreenshotLabel = new QLabel;
     mScreenshotLabel->setPixmap(mScreenshot);
 
@@ -33,26 +37,37 @@ void ScreenshotWindow::createUi() {
     mScreenshotLabel->setMouseTracking(true);
     mScreenshotLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    setCentralWidget(mScreenshotLabel);
-
+    // Help text
     mHelpLabel = new QLabel(mScreenshotLabel);
     mHelpLabel->setText(tr("Click, hold and drag to crop.\nClick inside the drawn rectangle to finish."));
     mHelpLabel->setStyleSheet("QLabel { background: #000; color: #fff; font-size: 18px; padding: 10px; }");
     mHelpLabel->move(10, 10);
+
+    setCentralWidget(mScreenshotLabel);
+
 }
 
-void ScreenshotWindow::keyReleaseEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) {
-        close();
-    }
-}
-
+/**
+ * Crops the captured screenshot based on the current crop selection and shows the result window.
+ */
 void ScreenshotWindow::selectCrop() {
     ResultWindow *result = new ResultWindow(mScreenshot.copy(mCropper->geometry()));
     result->show();
     close();
 }
 
+/**
+ * Called on key release.
+ */
+void ScreenshotWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+}
+
+/**
+ * Called on mouse click.
+ */
 void ScreenshotWindow::mousePressEvent(QMouseEvent *event) {
     QPoint pos = event->pos();
     if (mCropper != NULL && mCropper->geometry().contains(pos)) {
@@ -73,6 +88,9 @@ void ScreenshotWindow::mousePressEvent(QMouseEvent *event) {
     }
 }
 
+/**
+ * Called on mouse move.
+ */
 void ScreenshotWindow::mouseMoveEvent(QMouseEvent *event) {
     // Resize cropper if dragging
     if (mCropper != NULL && event->buttons() & Qt::LeftButton == 1) {
