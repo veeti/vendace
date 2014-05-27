@@ -46,6 +46,18 @@ void ResultWindow::cleanupEdit() {
 }
 
 /**
+ * Called on window resize.
+ */
+void ResultWindow::resizeEvent(QResizeEvent *event) {
+    QRect view = mUi.graphicsView->rect();
+    if (mScreenshot.width() >= view.width() || mScreenshot.height() >= view.height()) {
+        mUi.graphicsView->fitInView(mScreenshot.rect(), Qt::KeepAspectRatio);
+    } else {
+        mUi.graphicsView->fitInView(view);
+    }
+}
+
+/**
  * Saves the current screenshot into a temporary file. May return null on failure.
  */
 QTemporaryFile* ResultWindow::saveToTemp() {
@@ -171,16 +183,4 @@ void ResultWindow::savePressed() {
 void ResultWindow::openSettings() {
     SettingsDialog settings(this);
     settings.exec();
-}
-
-/**
- * Called on window resize.
- */
-void ResultWindow::resizeEvent(QResizeEvent *event) {
-    QRect view = mUi.graphicsView->rect();
-    if (mScreenshot.width() >= view.width() || mScreenshot.height() >= view.height()) {
-        mUi.graphicsView->fitInView(mScreenshot.rect(), Qt::KeepAspectRatio);
-    } else {
-        mUi.graphicsView->fitInView(view);
-    }
 }

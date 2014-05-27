@@ -33,6 +33,7 @@ class ResultWindow : public QMainWindow {
          * @return Pointer to temporary file or null on failure
          */
         QTemporaryFile *saveToTemp();
+        void resizeEvent(QResizeEvent*);
 
     protected slots:
         // Edit
@@ -50,9 +51,6 @@ class ResultWindow : public QMainWindow {
 
         // Menu
         void openSettings();
-
-        // Window
-        void resizeEvent(QResizeEvent*);
 
     private:
         QPixmap mScreenshot;
