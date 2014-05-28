@@ -1,5 +1,6 @@
 #include <QClipboard>
 #include <QDateTime>
+#include <QGraphicsPixmapItem>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QNetworkReply>
@@ -12,8 +13,9 @@
 
 ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     mUi.setupUi(this);
-    mScene.addPixmap(mScreenshot);
+    mScene.addPixmap(mScreenshot)->setTransformationMode(Qt::SmoothTransformation);
     mUi.graphicsView->setScene(&mScene);
+    mUi.graphicsView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
     mUi.uploadProgress->setVisible(false);
 
     // User interface signals
