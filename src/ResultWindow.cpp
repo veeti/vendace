@@ -1,5 +1,6 @@
 #include <QClipboard>
 #include <QDateTime>
+#include <QDesktopWidget>
 #include <QGraphicsPixmapItem>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -17,6 +18,10 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     mUi.graphicsView->setScene(&mScene);
     mUi.graphicsView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
     mUi.uploadProgress->setVisible(false);
+
+    // Center on screen
+    QRect screen = QApplication::desktop()->screenGeometry();
+    move(screen.center() - rect().center());
 
     // User interface signals
     connect(mUi.editButton, SIGNAL(pressed()), this, SLOT(editPressed()));
