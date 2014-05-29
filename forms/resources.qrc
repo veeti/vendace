@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="images">
+    <file alias="vendace-128.png">../share/icons/vendace-128.png</file>
+  </qresource>
+  <qresource prefix="text">
+    <file alias="LICENSE.md">../LICENSE.md</file>
+  </qresource>
+</RCC>

@@ -10,6 +10,7 @@
 
 #include "Uploader.hpp"
 #include "ResultWindow.hpp"
+#include "AboutDialog.hpp"
 #include "SettingsDialog.hpp"
 
 ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
@@ -29,6 +30,8 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     connect(mUi.uploadButton, SIGNAL(pressed()), this, SLOT(uploadPressed()));
     connect(mUi.settingsAction, SIGNAL(triggered(bool)), this, SLOT(openSettings()));
     connect(mUi.exitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
+    connect(mUi.aboutAction, SIGNAL(triggered(bool)), this, SLOT(openAbout()));
+    connect(mUi.aboutQtAction, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
     // Upload signals
     connect(&mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(uploadFinished(QNetworkReply*)));
@@ -197,4 +200,12 @@ void ResultWindow::savePressed() {
 void ResultWindow::openSettings() {
     SettingsDialog settings(this);
     settings.exec();
+}
+
+/**
+ * Opens the about dialog.
+ */
+void ResultWindow::openAbout() {
+    AboutDialog about(this);
+    about.exec();
 }

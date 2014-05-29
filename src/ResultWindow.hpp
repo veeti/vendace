@@ -51,6 +51,7 @@ class ResultWindow : public QMainWindow {
 
         // Menu
         void openSettings();
+        void openAbout();
 
     private:
         QPixmap mScreenshot;
