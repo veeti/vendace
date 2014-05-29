@@ -122,8 +122,12 @@ void ResultWindow::editProcessError(QProcess::ProcessError error) {
  * Handles the end of the edit process and loads the edited image.
  */
 void ResultWindow::editFinished() {
-    mScreenshot.load(mEditFile->fileName(), "PNG");
-    mScene.addPixmap(mScreenshot);
+    if (mScreenshot.load(mEditFile->fileName(), "PNG")) {
+        mScene.addPixmap(mScreenshot);
+    } else {
+        QMessageBox::critical(this, tr("Error"), tr("Failed to load edited file."));
+    }
+
     cleanupEdit();
 }
 
