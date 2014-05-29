@@ -28,6 +28,7 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     connect(mUi.saveButton, SIGNAL(pressed()), this, SLOT(savePressed()));
     connect(mUi.uploadButton, SIGNAL(pressed()), this, SLOT(uploadPressed()));
     connect(mUi.settingsAction, SIGNAL(triggered(bool)), this, SLOT(openSettings()));
+    connect(mUi.exitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
 
     // Upload signals
     connect(&mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(uploadFinished(QNetworkReply*)));

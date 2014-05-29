@@ -102,12 +102,19 @@
      <string>File</string>
     </property>
     <addaction name="settingsAction"/>
+    <addaction name="separator"/>
+    <addaction name="exitAction"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <action name="settingsAction">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="exitAction">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>
