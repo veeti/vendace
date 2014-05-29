@@ -24,6 +24,7 @@ class ScreenshotWindow : public QMainWindow {
         void keyReleaseEvent(QKeyEvent *event);
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
+        void mouseReleaseEvent(QMouseEvent *event);
 
     private:
         QPixmap mScreenshot;
