@@ -86,9 +86,6 @@
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Copyright © 2014 &lt;a href=&quot;http://veetipaananen.fi/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Veeti Paananen&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Licensed under the &lt;a href=&quot;#license&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;MIT license&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
-       <property name="margin">
-        <number>10</number>
-       </property>
        <property name="openExternalLinks">
         <bool>false</bool>
        </property>
