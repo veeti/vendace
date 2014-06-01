@@ -18,6 +18,11 @@ void AboutDialog::showLicense(QString link) {
         license.open(QIODevice::ReadOnly);
         QMessageBox::information(this, tr("License"), license.readAll());
         license.close();
+    } else if (link == "#contributors") {
+        QFile license(":/text/CONTRIBUTORS.md");
+        license.open(QIODevice::ReadOnly);
+        QMessageBox::information(this, tr("Contributors"), license.readAll());
+        license.close();
     } else {
         QDesktopServices::openUrl(QUrl(link));
     }
