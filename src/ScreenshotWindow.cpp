@@ -39,7 +39,7 @@ void ScreenshotWindow::createUi() {
 
     // Help text
     mHelpLabel = new QLabel(mScreenshotLabel);
-    mHelpLabel->setText(tr("Click, hold and drag to crop.\nClick inside the drawn rectangle to finish."));
+    mHelpLabel->setText(tr("Click, hold and drag to crop.\nRelease to finish."));
     mHelpLabel->setStyleSheet("QLabel { background: #000; color: #fff; font-size: 18px; padding: 10px; }");
     mHelpLabel->move(10, 10);
 
@@ -70,22 +70,17 @@ void ScreenshotWindow::keyReleaseEvent(QKeyEvent *event) {
  */
 void ScreenshotWindow::mousePressEvent(QMouseEvent *event) {
     QPoint pos = event->pos();
-    if (mCropper != NULL && mCropper->geometry().contains(pos)) {
-        // Click inside current rectangle
-        selectCrop();
-    } else {
-        // Hide current cropper
-        if (mCropper != NULL) {
-            mCropper->hide();
-            delete mCropper;
-        }
-
-        // Create new cropper
-        mCropOrigin = pos;
-        mCropper = new QRubberBand(QRubberBand::Rectangle, mScreenshotLabel);
-        mCropper->setGeometry(QRect(mCropOrigin, QSize()));
-        mCropper->show();
+    // Hide current cropper
+    if (mCropper != NULL) {
+        mCropper->hide();
+        delete mCropper;
     }
+
+    // Create new cropper
+    mCropOrigin = pos;
+    mCropper = new QRubberBand(QRubberBand::Rectangle, mScreenshotLabel);
+    mCropper->setGeometry(QRect(mCropOrigin, QSize()));
+    mCropper->show();
 }
 
 /**
@@ -101,4 +96,10 @@ void ScreenshotWindow::mouseMoveEvent(QMouseEvent *event) {
     bool mouseInHelp = mHelpLabel->geometry().contains(event->pos());
     bool cropperInHelp = (mCropper != NULL && mHelpLabel->geometry().intersects(mCropper->geometry()));
     mHelpLabel->setVisible(!(mouseInHelp || cropperInHelp));
+}
+
+void ScreenshotWindow::mouseReleaseEvent(QMouseEvent *event) {
+    if (mCropper != NULL && event->button() == Qt::LeftButton) {
+        selectCrop();
+    }
 }
