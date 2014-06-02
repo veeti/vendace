@@ -14,16 +14,18 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent) {
 
 void AboutDialog::showLicense(QString link) {
     if (link == "#license") {
-        QFile license(":/text/LICENSE.md");
-        license.open(QIODevice::ReadOnly);
-        QMessageBox::information(this, tr("License"), license.readAll());
-        license.close();
+        showResourceText("LICENSE.md", tr("License"));
     } else if (link == "#contributors") {
-        QFile license(":/text/CONTRIBUTORS.md");
-        license.open(QIODevice::ReadOnly);
-        QMessageBox::information(this, tr("Contributors"), license.readAll());
-        license.close();
+        showResourceText("CONTRIBUTORS.md", tr("Contributors"));
     } else {
         QDesktopServices::openUrl(QUrl(link));
     }
+}
+
+void AboutDialog::showResourceText(QString filename, QString dialogTitle) {
+    QFile file(":/text/" + filename);
+    if (file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this, dialogTitle, file.readAll());
+    }
+    file.close();
 }

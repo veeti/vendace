@@ -15,6 +15,9 @@ class AboutDialog : public QDialog {
     public slots:
         void showLicense(QString);
 
+    protected:
+        void showResourceText(QString, QString);
+
     private:
         Ui::AboutDialog mUi;
 
