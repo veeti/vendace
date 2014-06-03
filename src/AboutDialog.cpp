@@ -29,3 +29,10 @@ void AboutDialog::showResourceText(QString filename, QString dialogTitle) {
     }
     file.close();
 }
+
+LogoLabel::LogoLabel(QWidget *parent = NULL) : QLabel(parent) {
+}
+
+void LogoLabel::mouseReleaseEvent(QMouseEvent *event) {
+    QDesktopServices::openUrl(QUrl("http://vendace.org"));
+}

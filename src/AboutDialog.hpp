@@ -3,6 +3,18 @@
 
 #include <QtWidgets>
 
+class LogoLabel : public QLabel {
+
+    Q_OBJECT
+
+    public:
+        LogoLabel(QWidget *parent);
+
+    protected:
+        void mouseReleaseEvent(QMouseEvent*);
+
+};
+
 #include "ui_about.h"
 
 class AboutDialog : public QDialog {
