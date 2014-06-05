@@ -2,7 +2,7 @@
 
 ## Version 0.1.1
 
-(Nothing yet.)
+* Improved clipboard persistence: Vendace will now stay alive until the copied URL is overwritten.
 
 ## Version 0.1.0 (June 3rd, 2014)
 
