@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include <QNetworkReply>
 #include <QDir>
-#include <QTimer>
 
 #include "Uploader.hpp"
 #include "ResultWindow.hpp"
