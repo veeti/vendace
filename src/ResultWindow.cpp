@@ -1,4 +1,3 @@
-#include <QClipboard>
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QGraphicsPixmapItem>
@@ -163,13 +162,11 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
         // Copy URL
         QClipboard* clipboard = QApplication::clipboard();
         clipboard->setText(mUploader.getUrlFromReply(reply));
+        connect(clipboard, SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
         QMessageBox::information(this, tr("Upload complete"), tr("The image link has been copied to your clipboard."));
 
-        // Stick around for a minute to keep the clipboard
+        // Stick around until clipboard is overwritten
         hide();
-        QTimer *timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), this, SLOT(close()));
-        timer->start(60000);
     } else {
         QMessageBox::critical(this, tr("Upload error"), tr("The upload failed. Try again later."));
         mUi.uploadProgress->setVisible(false);
@@ -177,6 +174,16 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
     }
 
     reply->deleteLater();
+}
+
+/**
+ * Called when the system's clipboard is changed. This will close the application as there is no
+ * longer any need to stay alive to persist the copied URL.
+ */
+void ResultWindow::clipboardChanged(QClipboard::Mode mode) {
+    if (mode == QClipboard::Clipboard) {
+        close();
+    }
 }
 
 /**

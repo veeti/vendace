@@ -1,6 +1,7 @@
 #ifndef RESULT_WINDOW_HPP
 #define RESULT_WINDOW_HPP
 
+#include <QClipboard>
 #include <QMainWindow>
 #include <QPixmap>
 #include <QTemporaryFile>
@@ -45,6 +46,7 @@ class ResultWindow : public QMainWindow {
         // Upload
         void uploadPressed();
         void uploadFinished(QNetworkReply*);
+        void clipboardChanged(QClipboard::Mode);
 
         // Save
         void savePressed();
