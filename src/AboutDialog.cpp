@@ -5,7 +5,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent) {
     mUi.setupUi(this);
 
     // Format version
-    QString version = QString("%1.%2.%3").arg(VENDACE_MAJOR).arg(VENDACE_MINOR).arg(VENDACE_PATCH);
+    QString version = QString("%1.%2.%3%4").arg(VENDACE_MAJOR).arg(VENDACE_MINOR).arg(VENDACE_PATCH).arg(VENDACE_SUFFIX);
     mUi.versionLabel->setText(mUi.versionLabel->text().arg(version));
 
     connect(mUi.closeButton, SIGNAL(pressed()), this, SLOT(close()));
