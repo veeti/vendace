@@ -2,9 +2,15 @@
 
 ## Version 0.1.1
 
-* Improved clipboard persistence: Vendace will now stay alive until the copied URL is overwritten.
+* Disabled startup feedback to prevent unwanted visual hints in the screenshot.
 
 * Added a setting for copying to the selection buffer.
+
+* Improved focus handling on the crop overlay.
+
+* Improved clipboard persistence.
+
+* Fixed a syntax error in the desktop file.
 
 ## Version 0.1.0 (June 3rd, 2014)
 
