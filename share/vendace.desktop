@@ -6,4 +6,5 @@ Comment=Screenshot cropper and uploader
 Categories=Graphics;Utility
 Exec=${CMAKE_INSTALL_PREFIX}/bin/vendace
 Icon=vendace
+StartupNotify=false
 
