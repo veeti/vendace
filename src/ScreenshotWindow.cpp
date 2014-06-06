@@ -40,7 +40,7 @@ void ScreenshotWindow::createUi() {
 
     // Help text
     mHelpLabel = new QLabel(mScreenshotLabel);
-    mHelpLabel->setText(tr("Click, hold and drag to crop.\nRelease to finish."));
+    mHelpLabel->setText(tr("Click, hold and drag to crop. Release to finish.\nPress Escape to cancel and quit."));
     mHelpLabel->setStyleSheet("QLabel { background: #000; color: #fff; font-size: 18px; padding: 10px; }");
     mHelpLabel->move(10, 10);
 
