@@ -160,7 +160,8 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
         // Copy URL
         QClipboard* clipboard = QApplication::clipboard();
-        clipboard->setText(mUploader.getUrlFromReply(reply));
+        QClipboard::Mode setting = mSettings.copyTo() == SETTING_COPY_TO_CLIPBOARD ? QClipboard::Clipboard : QClipboard::Selection;
+        clipboard->setText(mUploader.getUrlFromReply(reply), setting);
         connect(clipboard, SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
         QMessageBox::information(this, tr("Upload complete"), tr("The image link has been copied to your clipboard."));
 
@@ -180,7 +181,8 @@ void ResultWindow::uploadFinished(QNetworkReply *reply) {
  * longer any need to stay alive to persist the copied URL.
  */
 void ResultWindow::clipboardChanged(QClipboard::Mode mode) {
-    if (mode == QClipboard::Clipboard) {
+    QClipboard::Mode setting = mSettings.copyTo() == SETTING_COPY_TO_CLIPBOARD ? QClipboard::Clipboard : QClipboard::Selection;
+    if (mode == setting) {
         close();
     }
 }

@@ -50,6 +50,29 @@
       </widget>
      </item>
      <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Upload</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Copy URL to</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="copyTo"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>

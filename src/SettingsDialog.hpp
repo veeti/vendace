@@ -16,6 +16,7 @@ class SettingsDialog : public QDialog {
     protected slots:
         void editorPathChanged(QString);
         void browseEditorPath();
+        void copyToChanged(int);
 
     private:
         Ui::SettingsDialog mUi;
