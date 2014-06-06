@@ -18,6 +18,7 @@ ScreenshotWindow::ScreenshotWindow() : mCropper(NULL) {
     // Full screen and no title bar
     setWindowFlags(Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
     setWindowState(Qt::WindowFullScreen);
+    setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
 
     createUi();
@@ -44,7 +45,7 @@ void ScreenshotWindow::createUi() {
     mHelpLabel->move(10, 10);
 
     setCentralWidget(mScreenshotLabel);
-
+    activateWindow();
 }
 
 /**
