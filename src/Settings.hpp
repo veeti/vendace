@@ -1,6 +1,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include <QClipboard>
 #include <QString>
 #include <QSettings>
 
@@ -16,6 +17,7 @@ class Settings {
         QString editorPath() const;
         void setCopyTo(QString mode);
         QString copyTo() const;
+        QClipboard::Mode copyToAsMode() const;
 
     protected:
         QSettings mSettings;

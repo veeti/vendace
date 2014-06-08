@@ -15,3 +15,10 @@ void Settings::setCopyTo(QString mode) {
 QString Settings::copyTo() const {
     return mSettings.value(KEY_COPY_TO, SETTING_COPY_TO_CLIPBOARD).toString();
 }
+
+QClipboard::Mode Settings::copyToAsMode() const {
+    if (copyTo() == SETTING_COPY_TO_SELECTION) {
+        return QClipboard::Selection;
+    }
+    return QClipboard::Clipboard;
+}
