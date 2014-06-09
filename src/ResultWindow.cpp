@@ -125,7 +125,7 @@ void ResultWindow::editProcessError(QProcess::ProcessError error) {
  */
 void ResultWindow::editFinished() {
     if (mScreenshot.load(mEditFile->fileName(), "PNG")) {
-        mScene.addPixmap(mScreenshot);
+        mScene.addPixmap(mScreenshot)->setTransformationMode(Qt::SmoothTransformation);
     } else {
         QMessageBox::critical(this, tr("Error"), tr("Failed to load edited file."));
     }

@@ -10,6 +10,8 @@
 
 * Improved clipboard persistence.
 
+* Improved preview quality after editing.
+
 * Fixed a syntax error in the desktop file.
 
 ## Version 0.1.0 (June 3rd, 2014)
