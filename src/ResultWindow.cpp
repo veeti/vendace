@@ -26,6 +26,7 @@ ResultWindow::ResultWindow(QPixmap screenshot) : mScreenshot(screenshot) {
     connect(mUi.editButton, SIGNAL(pressed()), this, SLOT(editPressed()));
     connect(mUi.saveButton, SIGNAL(pressed()), this, SLOT(savePressed()));
     connect(mUi.uploadButton, SIGNAL(pressed()), this, SLOT(uploadPressed()));
+    connect(mUi.saveAction, SIGNAL(triggered(bool)), this, SLOT(savePressed()));
     connect(mUi.settingsAction, SIGNAL(triggered(bool)), this, SLOT(openSettings()));
     connect(mUi.exitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
     connect(mUi.aboutAction, SIGNAL(triggered(bool)), this, SLOT(openAbout()));

@@ -2,6 +2,8 @@
 
 ## Version 0.1.2 (not released)
 
+* Added a CTRL + S save shortcut in the preview dialog.
+
 ## Version 0.1.1 (June 10th, 2014)
 
 * Disabled startup feedback to prevent unwanted visual hints in the screenshot.
