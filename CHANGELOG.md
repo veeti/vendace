@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 0.1.3 (not released)
+
 ## Version 0.1.2 (June 25th, 2014)
 
 * Added a CTRL + S save shortcut in the preview dialog.
