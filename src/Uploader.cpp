@@ -30,5 +30,5 @@ QString Uploader::getUrlFromReply(QNetworkReply *reply) {
         return "";
     }
 
-    return doc.object()["data"].toObject()["link"].toString();
+    return doc.object()["data"].toObject()["link"].toString().replace("http:", "https:");
 }
