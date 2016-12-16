@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtNetwork>
+#include "Settings.hpp"
 
 class Uploader : public QObject {
 
@@ -13,6 +14,9 @@ class Uploader : public QObject {
         QNetworkRequest makeRequest();
         QHttpMultiPart* makeMultiPart(QIODevice*);
         QString getUrlFromReply(QNetworkReply*);
+
+    protected:
+        Settings mSettings;
 
 };
 

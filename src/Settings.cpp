@@ -22,3 +22,27 @@ QClipboard::Mode Settings::copyToAsMode() const {
     }
     return QClipboard::Clipboard;
 }
+
+void Settings::setUploadUrl(QString url) {
+    mSettings.setValue(KEY_UPLOAD_URL, url);
+}
+
+QString Settings::uploadUrl() const {
+    return mSettings.value(KEY_UPLOAD_URL).toString();
+}
+
+void Settings::setUploadKey(QString key) {
+    mSettings.setValue(KEY_UPLOAD_KEY, key);
+}
+
+QString Settings::uploadKey() const {
+    return mSettings.value(KEY_UPLOAD_KEY).toString();
+}
+
+void Settings::setUploadHttps(QString mode) {
+    mSettings.setValue(KEY_UPLOAD_HTTPS, mode);
+}
+
+QString Settings::uploadHttps() const {
+    return mSettings.value(KEY_UPLOAD_HTTPS).toString();
+}

@@ -15,6 +15,9 @@ class SettingsDialog : public QDialog {
 
     protected slots:
         void editorPathChanged(QString);
+        void uploadUrlChanged(QString);
+        void uploadKeyChanged(QString);
+        void uploadHttpsChanged(bool);
         void browseEditorPath();
         void copyToChanged(int);
 

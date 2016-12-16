@@ -4,8 +4,8 @@ Uploader::Uploader(QObject *parent) : QObject(parent) {
 }
 
 QNetworkRequest Uploader::makeRequest() {
-    QNetworkRequest request(QUrl("https://api.imgur.com/3/image"));
-    request.setRawHeader("Authorization", "Client-ID ede801c7c97f184");
+    QNetworkRequest request(QUrl(mSettings.uploadUrl()));
+    request.setRawHeader("Authorization", mSettings.uploadKey().toUtf8());
     return request;
 }
 
@@ -30,5 +30,9 @@ QString Uploader::getUrlFromReply(QNetworkReply *reply) {
         return "";
     }
 
-    return doc.object()["data"].toObject()["link"].toString().replace("http:", "https:");
+    QString url = doc.object()["data"].toObject()["link"].toString();
+    if (mSettings.uploadHttps() == SETTING_UPLOAD_HTTPS) {
+        url = url.replace("http:", "https:");
+    }
+    return url;
 }
