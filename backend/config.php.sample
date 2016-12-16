@@ -1,0 +1,12 @@
+<?php
+
+$AUTH_KEY = "Client-ID ede801c7c97f184";
+$PICDIR = "pics/";
+$HOST = "localhost"; 
+$URLFORMAT = "http://$HOST/$PICDIR/[[PICID]]";
+
+
+if( ! file_exists($PICDIR)) {
+	mkdir($PICDIR);
+}
+?>
